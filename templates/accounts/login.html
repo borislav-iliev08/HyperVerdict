@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Log in | HyperVerdict{% endblock %}
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <a class="auth-brand brand" href="/" aria-label="HyperVerdict home"><span class="brand-mark">H</span><span>Hyper<span class="brand-accent">Verdict</span></span></a>
+        <div class="eyebrow"><span class="eyebrow-line"></span> WELCOME BACK</div>
+        <h1>Log In</h1>
+        <p class="auth-subtitle">Sign in to continue connecting with trusted professionals.</p>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+            {{ form }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="button auth-submit">Log In <span aria-hidden="true">&rarr;</span></button>
+        </form>
+        <div class="auth-links"><a href="{% url 'password_reset' %}">Forgot password?</a></div>
+        <p class="auth-switch">New to HyperVerdict? <a href="{% url 'register' %}">Create an account</a></p>
+        <p class="auth-privacy">Your account helps you manage expert conversations and appointments securely.</p>
+    </div>
+</section>
+{% endblock %}

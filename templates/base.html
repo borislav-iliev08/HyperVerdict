@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0B1424">
+    <title>{% block title %}HyperVerdict — Trusted expertise, clearly connected{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=profile-avatar-2">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% include 'common/header.html' %}
+    <div class="content-layout">
+        {% include 'common/nav_bar.html' %}
+        <main>{% block content %}{% endblock %}</main>
+    </div>
+    {% include 'common/footer.html' %}
+</body>
+</html>

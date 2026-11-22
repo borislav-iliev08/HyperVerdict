@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}HyperVerdict — Trusted expertise, clearly connected{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> EXPERTISE YOU CAN TRUST</div>
+        <h1>Make your next move<br>with <em>confidence.</em></h1>
+        <p class="hero-description">Find the right legal and real-estate professional for every important decision. Clear guidance starts here.</p>
+        <div class="hero-actions"><a class="button" href="/experts/">Find your expert <span aria-hidden="true">↗</span></a><a class="text-link" href="/experts/">Explore our services <span aria-hidden="true">→</span></a></div>
+        <div class="hero-proof"><span class="proof-icon">✓</span><span>Thoughtfully matched professionals</span><span class="proof-divider"></span><span>Guidance at every step</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-glow"></div><div class="art-card"><div class="art-card-top"><span class="art-dot"></span><span>YOUR NEXT CHAPTER</span></div><div class="art-monogram">HV</div><div class="art-rule"></div><div class="art-caption">Clear advice.<br><strong>Confident decisions.</strong></div><div class="art-signature">HYPERVERDICT <span>✳</span></div></div><div class="floating-note note-top"><span class="note-icon">✦</span><span>Expert guidance<br><strong>within reach</strong></span></div><div class="floating-note note-bottom"><span class="note-check">✓</span><span>Trusted professionals<br><strong>One place to begin</strong></span></div></div>
+</section>
+<section class="trust-strip"><div><span class="trust-number">01</span><span>Find experienced professionals</span></div><div><span class="trust-number">02</span><span>Compare with confidence</span></div><div><span class="trust-number">03</span><span>Move forward with clarity</span></div></section>
+<section class="services-section"><div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> HOW WE HELP</div><h2>The right expertise,<br>for what comes next.</h2></div><p>Important decisions deserve informed support. Start with the professionals who understand your goals.</p></div><div class="service-cards"><a class="service-card" href="/experts/"><span class="service-icon">§</span><span class="service-index">01 / LEGAL</span><h3>Legal services</h3><p>Connect with legal professionals ready to help you navigate your next step.</p><span class="card-arrow">↗</span></a><a class="service-card" href="/experts/"><span class="service-icon">⌂</span><span class="service-index">02 / PROPERTY</span><h3>Real estate</h3><p>Find knowledgeable property experts for decisions that feel like home.</p><span class="card-arrow">↗</span></a><a class="service-card" href="/experts/"><span class="service-icon">✧</span><span class="service-index">03 / DISCOVERY</span><h3>Find an expert</h3><p>Discover a trusted professional whose experience fits your needs.</p><span class="card-arrow">↗</span></a></div></section>
+<section class="closing-cta"><div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR NEXT STEP STARTS HERE</div><h2>Good decisions begin<br>with the right people.</h2></div><a class="button" href="{% url 'register' %}">Get started <span aria-hidden="true">↗</span></a></section>
+{% endblock %}

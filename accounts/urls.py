@@ -1,11 +1,14 @@
 from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetConfirmView, PasswordResetDoneView, \
     PasswordResetView, PasswordChangeDoneView, PasswordChangeView
 from django.urls import path
+from django.views import View
 
+from accounts.views import RegistrationProfileView, LoginProfileView
 
 urlpatterns=[
     #TODO:LOGIN AND REGISTER VIEW
-
+    path('register/',RegistrationProfileView.as_view(),name='register'),
+    path('login/',LoginProfileView.as_view(),name='login'),
     path('password-change/', PasswordChangeView.as_view(), name='password-change'),
     path('password-change-done/', PasswordChangeDoneView.as_view(), name='password-change-done'),
     # password forgotten

@@ -9,8 +9,8 @@ UserModel = get_user_model()
 @admin.register(UserModel)
 class ProfileBaseUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("email",)}),
+        (None, {"fields": ("password",)}),
+        (_("Personal info"), {"fields": ("email",'first_name','last_name','role')}),
         (
             _("Permissions"),
             {
@@ -30,16 +30,16 @@ class ProfileBaseUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ('email',"username", "usable_password", "password1", "password2"),
+                "fields": ('email','first_name','last_name','role',"usable_password", "password1", "password2"),
             },
         ),
     )
     form = UserChangeForm
     add_form = AdminUserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ("username", "email",  "is_staff")
-    search_fields = ("username",  "email")
-    ordering = ("username",)
+    list_display = ("email",'first_name' ,'last_name', 'role', "is_staff")
+    search_fields = ("email",'first_name')
+    ordering = ("email",)
     filter_horizontal = (
         "groups",
         "user_permissions",
