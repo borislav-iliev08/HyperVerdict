@@ -151,9 +151,15 @@ STATICFILES_DIRS=[
     BASE_DIR/'statics/'
 ]
 MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR/'media'
+
 LOGIN_REDIRECT_URL='home'
 LOGOUT_REDIRECT_URL='home'
 LOGIN_URL='login'
+
+CELERY_TIMEZONE=TIME_ZONE
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

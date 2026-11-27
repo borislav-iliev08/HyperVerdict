@@ -1,13 +1,14 @@
 import logging
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, DeleteView, UpdateView
+
 logger = logging.getLogger(__name__)
-from accounts.forms import RegistrationProfileForm
-from accounts.models import ProfileBaseUser
+from accounts.forms import RegistrationProfileForm, EditProfileForm
+from accounts.models import ProfileBaseUser, Profile
+
 
 # Create your views here.
 class RegistrationProfileView(CreateView):
@@ -62,4 +63,42 @@ class LoginProfileView(LoginView):
 
 class LogoutProfileView(LoginRequiredMixin,LogoutView):
     next_page = reverse_lazy('home')
+
+
+class DetailsProfileView(LoginRequiredMixin, DetailView):
+    model=Profile
+    template_name = 'accounts/details.html'
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(pk = self.request.user.pk).select_related('user')
+        return query
+
+class DeleteProfileView(LoginRequiredMixin,DeleteView):
+    model= ProfileBaseUser
+    template_name = 'accounts/delete.html'
+    success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(pk = self.request.user.pk)
+        return query
+
+
+class UpdateProfileView(LoginRequiredMixin,UpdateView):
+    model = Profile
+    form_class = EditProfileForm
+    template_name = 'accounts/edit.html'
+    success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(pk = self.request.user.pk).select_related('user')
+        return query
+
+
+
+
+
+
+
 

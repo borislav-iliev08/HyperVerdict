@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Confirm account deletion | HyperVerdict{% endblock %}
+{% block content %}
+<section class="delete-confirm-page" aria-labelledby="delete-confirm-title">
+    <article class="delete-confirm-card">
+        <div class="delete-warning-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 3h.01"/></svg>
+        </div>
+        <p class="delete-confirm-eyebrow">ACCOUNT SECURITY</p>
+        <h1 id="delete-confirm-title">Delete Your Account?</h1>
+        <p class="delete-confirm-description">Are you sure you want to permanently delete your HyperVerdict account?</p>
+        <p class="delete-confirm-warning">This action cannot be undone.</p>
+
+        <form method="post" class="delete-confirm-actions">
+            {% csrf_token %}
+            <button type="submit" class="delete-confirm-button delete-confirm-submit">Confirm Delete</button>
+            <a class="delete-confirm-button delete-confirm-cancel" href="{% url 'profile' user.pk %}">Cancel</a>
+        </form>
+    </article>
+</section>
+{% endblock %}

@@ -9,7 +9,6 @@
         <p class="auth-subtitle">Sign in to continue connecting with trusted professionals.</p>
         <form method="post" class="auth-form">
             {% csrf_token %}
-            {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
             {{ form }}
             <input type="hidden" name="next" value="{{ next }}">
             <button type="submit" class="button auth-submit">Log In <span aria-hidden="true">&rarr;</span></button>

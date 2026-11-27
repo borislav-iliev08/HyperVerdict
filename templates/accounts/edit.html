@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Edit your profile | HyperVerdict{% endblock %}
+{% block content %}
+<section class="auth-page profile-edit-page">
+    <div class="auth-card profile-edit-card">
+        <a class="auth-brand brand" href="/" aria-label="HyperVerdict home"><span class="brand-mark">H</span><span>Hyper<span class="brand-accent">Verdict</span></span></a>
+        <div class="eyebrow"><span class="eyebrow-line"></span>{{ request.user.first_name }} {{ request.user.last_name }}</div>
+        <h1>Edit Your Profile</h1>
+        <p class="auth-subtitle">Keep your profile information current and help others get to know you.</p>
+
+        <form method="post" enctype="multipart/form-data" class="auth-form profile-edit-form">
+            {% csrf_token %}
+            {% if form.instance.profile_picture %}
+                <div class="profile-edit-picture-preview">
+                    <img src="{{ form.instance.profile_picture.url }}" alt="Current profile picture">
+                    <span>Current profile picture</span>
+                </div>
+            {% endif %}
+            {{ form }}
+            <div class="profile-edit-actions">
+                <button type="submit" class="button auth-submit">Save Changes <span aria-hidden="true">&rarr;</span></button>
+                <a class="profile-edit-cancel" href="{% url 'profile' user.pk %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 # Create your models here.
@@ -34,14 +35,14 @@ class ProfileUserManager(BaseUserManager):
 
 class ProfileBaseUser(AbstractBaseUser,PermissionsMixin):
     class RoleChoice(models.TextChoices):
-        CL = 'Client','Customer'
-        EX='Expert','Expert'
+        CL = 'Customer','Customer'
+        EX='Professional','Professional'
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name','last_name']
     email = models.EmailField(unique=True,blank=False,null=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    role = models.CharField(max_length=10,choices=RoleChoice.choices,default=RoleChoice.CL)
+    role = models.CharField(max_length=15,choices=RoleChoice.choices,default=RoleChoice.CL)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -53,10 +54,10 @@ class ProfileBaseUser(AbstractBaseUser,PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(ProfileBaseUser,on_delete=models.CASCADE,primary_key=True)
-    age = models.PositiveIntegerField(null=True)
+    age = models.PositiveIntegerField(blank=True,null=True,validators=[MaxValueValidator(110),MinValueValidator(18)])
     phone_number = models.CharField(max_length=20,blank=True,null=True,unique=True)
-    profile_picture = models.ImageField(upload_to='accounts/',null=True)
-    bio = models.TextField(blank=True,null=True)
+    profile_picture = models.ImageField(upload_to='accounts/',null=True,blank=True)
+    bio = models.TextField(blank=True,null=True,max_length=300)
     city = models.CharField(max_length=20,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

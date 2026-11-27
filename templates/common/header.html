@@ -6,7 +6,7 @@
         <label class="menu-button" for="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></label>
         <div class="header-actions">
             {% if user.is_authenticated %}
-                <a class="login-link profile-link" href="/accounts/profile/">
+                <a class="login-link profile-link" href={% url 'profile' user.pk %}>
                     {% if user.profile.profile_picture %}
                         <img class="profile-avatar" src="{{ user.profile.profile_picture.url }}" alt="">
                     {% else %}

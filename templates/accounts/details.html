@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Your profile | HyperVerdict{% endblock %}
+{% block content %}
+<section class="auth-page profile-page">
+    <article class="auth-card profile-card" aria-labelledby="profile-title">
+        <header class="profile-card-heading">
+            <div class="profile-portrait">
+                {% if profile and profile.profile_picture %}
+                    <img class="profile-picture" src="{{ profile.profile_picture.url }}" alt="Profile photo of {{ user.first_name }} {{ user.last_name }}">
+                {% else %}
+                    <img class="profile-picture" src="{% static 'images/default-avatar.svg' %}" alt="Default profile avatar">
+                {% endif %}
+            </div>
+            <h1 id="profile-title">{{ user.get_full_name|default:user.email }}</h1>
+            <span class="profile-role">{{ user.get_role_display|default:user.role }}</span>
+            <p class="profile-member">Member since {{ profile.created_at|date:"F Y"|default:"Recently" }}</p>
+        </header>
+
+        <section class="profile-information" aria-labelledby="profile-information-title">
+            <h2 id="profile-information-title" class="profile-group-title">Personal information</h2>
+            <div class="profile-details-grid">
+                <div class="profile-detail"><span class="profile-detail-label">First name</span><span class="profile-detail-value">{{ user.first_name|capfirst|default:"Not provided" }}</span></div>
+                <div class="profile-detail"><span class="profile-detail-label">Last name</span><span class="profile-detail-value">{{ user.last_name|capfirst|default:"Not provided" }}</span></div>
+                <div class="profile-detail"><span class="profile-detail-label">Email address</span><span class="profile-detail-value">{{ user.email|default:"Not provided" }}</span></div>
+                <div class="profile-detail"><span class="profile-detail-label">Phone number</span><span class="profile-detail-value">{{ profile.phone_number|default:"Not provided" }}</span></div>
+                <div class="profile-detail">
+                    <span class="profile-detail-label">City</span>
+                    <span class="profile-detail-value">
+                        {% if profile.city %}
+                            {{ profile.city|capfirst}}
+                        {% else %}
+                            {{ profile.city|default:"Not provided" }}
+                        {% endif %}
+
+                    </span>
+                </div>
+                <div class="profile-detail"><span class="profile-detail-label">Age</span><span class="profile-detail-value">{{ profile.age|default:"Not provided" }}</span></div>
+            </div>
+        </section>
+
+        <section class="profile-biography" aria-labelledby="profile-biography-title">
+            <h2 id="profile-biography-title" class="profile-group-title">About me</h2>
+            {% if profile.bio %}
+                <p>{{ profile.bio|capfirst}}</p>
+            {% else %}
+                <p>{{ profile.bio|default:"No biography has been added yet."|linebreaksbr }}</p>
+            {% endif %}
+        </section>
+
+        <nav class="profile-actions" aria-label="Account actions">
+            <form class="profile-action-form" method="get" action="{% url 'edit' user.pk %}">
+                <button  class="button profile-action profile-action-edit" >Edit Profile</button>
+            </form>
+
+            <form class="profile-action-form" method="get" action="{% url 'password-change' %}">
+                <button class="button button-outline profile-action" type="submit">Change Password</button>
+            </form>
+            <form class="profile-action-form" method="get" action="{% url 'delete' request.user.pk %}">
+                <button class="button profile-action profile-action-delete" type="submit">Delete Account</button>
+            </form>
+            <form class="profile-action-form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="button button-outline profile-action" type="submit">Logout</button>
+            </form>
+        </nav>
+    </article>
+</section>
+{% endblock %}
