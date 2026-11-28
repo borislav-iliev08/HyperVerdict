@@ -5,7 +5,7 @@ from accounts.models import Profile
 register = template.Library()
 
 @register.simple_tag
-def user_group(user)->bool:
+def user_group_is_client(user)->bool:
     if user.groups.filter(name='Clients').exists():
         return True
     return False

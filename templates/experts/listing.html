@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Find an Expert | HyperVerdict{% endblock %}
+
+{% block content %}
+<div class="expert-directory">
+    <section class="expert-directory-hero" aria-labelledby="directory-title">
+        <div class="expert-directory-hero-inner">
+
+            <h1 id="directory-title">Find Your <em>Expert</em></h1>
+            <p class="expert-directory-intro">Browse legal and real estate experts, explore their specialties, and connect with the right professional.</p>
+
+            <form class="expert-search" method="get" role="search">
+                <label class="expert-search-label" for="expert-search-input">Search professionals</label>
+                <div class="expert-search-control">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+                    <input id="expert-search-input" type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Name or area of expertise" autocomplete="on">
+                    {% if request.GET.category %}<input type="hidden" name="category" value="{{ request.GET.category }}">{% endif %}
+                    <button class="button button-small" type="submit">Search <span aria-hidden="true">→</span></button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="expert-directory-content" aria-label="Expert search results">
+        <div class="expert-directory-heading">
+            <div>
+                <div class="eyebrow"><span class="eyebrow-line"></span> THE DIRECTORY</div>
+                <h2>Professionals ready to help</h2>
+            </div>
+            {% if is_paginated %}
+                <p class="expert-result-count">{{ page_obj.paginator.count }} professional{{ page_obj.paginator.count|pluralize }}</p>
+            {% endif %}
+        </div>
+
+        {% if request.GET.q or request.GET.category %}
+            <div class="expert-active-filters" aria-label="Active filters">
+                <span class="expert-active-label">Active filters</span>
+                {% if request.GET.q %}
+                    <a class="expert-filter-chip" href="{% querystring q='' %}" aria-label="Remove search filter {{ request.GET.q }}">
+                        <span>Search: {{ request.GET.q }}</span><span class="expert-chip-remove" aria-hidden="true">×</span>
+                    </a>
+                {% endif %}
+                {% if request.GET.category %}
+                    <a class="expert-filter-chip" href="{% querystring category='' %}" aria-label="Remove category filter {{ request.GET.category }}">
+                        <span>Category: {{ request.GET.category }}</span><span class="expert-chip-remove" aria-hidden="true">×</span>
+                    </a>
+                {% endif %}
+                <a class="expert-clear-filters" href="{{ request.path }}">Clear all</a>
+            </div>
+        {% endif %}
+
+        <div class="expert-directory-grid">
+            <aside class="expert-filter-panel" aria-labelledby="expert-filter-title">
+                <div class="expert-filter-panel-heading">
+                    <span class="expert-filter-icon" aria-hidden="true">⌘</span>
+                    <h2 id="expert-filter-title">Refine your search</h2>
+                </div>
+                <form method="get" class="expert-filter-form">
+                    {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}">{% endif %}
+                    <label for="expert-category">Specialization category</label>
+                    <select id="expert-category" name="category">
+                        <option value="" {% if not request.GET.category %}selected{% endif %}>All categories</option>
+                        <option value="Legal" {% if request.GET.category == 'Legal' %}selected{% endif %}>Legal</option>
+                        <option value="Real Estate" {% if request.GET.category == 'Real Estate' %}selected{% endif %}>Real Estate</option>
+                    </select>
+                    <button class="button expert-filter-submit" type="submit">Apply category</button>
+                </form>
+                <div class="expert-filter-note"><span aria-hidden="true">✦</span> Thoughtful guidance starts with the right expertise.</div>
+            </aside>
+
+            <div class="expert-results">
+                {% for expert in experts_listing %}
+                    <article class="expert-card">
+                        <div class="expert-card-main">
+                            <a class="expert-avatar-link" href="{% url 'profile' expert.profile.user.pk %}" aria-label="View {{ expert.profile.user.first_name }} {{ expert.profile.user.last_name }}'s profile">
+                                {% if expert.profile.profile_picture %}
+                                    <img class="expert-avatar" src="{{ expert.profile.profile_picture.url }}" alt="Profile photo of {{ expert.profile.user.first_name }} {{ expert.profile.user.last_name }}">
+                                {% else %}
+                                    <img class="expert-avatar" src="{% static 'images/default-avatar.svg' %}" alt="Default profile avatar">
+                                {% endif %}
+                            </a>
+                            <div class="expert-card-identity">
+                                <div class="expert-card-kicker">{{ expert.title }}</div>
+                                <h3><a href="{% url 'profile' expert.profile.user.pk %}">{{ expert.profile.user.first_name }} {{ expert.profile.user.last_name }}</a></h3>
+                                <div class="expert-card-meta">
+                                    <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{ expert.city }}</span>
+                                    <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18m-11 0v2h4v-2"/></svg>{{ expert.experience_years }} year{{ expert.experience_years|pluralize }} experience</span>
+                                </div>
+                            </div>
+                            {% if expert.is_verified %}
+                                <span class="expert-verified"><span aria-hidden="true">✓</span> Verified</span>
+                            {% endif %}
+                        </div>
+
+                        {% if expert.description %}<p class="expert-card-description">{{ expert.description }}</p>{% endif %}
+
+                        {% if expert.specialization.all %}
+                            <div class="expert-specializations" aria-label="Specializations">
+                                {% for specialization in expert.specialization.all %}
+                                    <span class="expert-specialization-chip">{{ specialization.name }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="expert-card-footer">
+                            <div class="expert-price"><span>Consultation</span><strong>{{ expert.consultation_price }}</strong></div>
+                            <a class="button button-outline button-small expert-profile-button" href="{% url 'profile' expert.profile.user.pk %}">View profile <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="expert-empty-state">
+                        <span class="expert-empty-mark" aria-hidden="true">§</span>
+                        <h3>No professionals found</h3>
+                        <p>Try a different name or category to explore the directory.</p>
+                        {% if request.GET.q or request.GET.category %}<a class="text-link" href="{{ request.path }}">Clear your filters <span aria-hidden="true">→</span></a>{% endif %}
+                    </div>
+                {% endfor %}
+
+                {% if is_paginated %}
+                    <nav class="expert-pagination" aria-label="Expert listing pages">
+                        {% if page_obj.has_previous %}
+                            <a class="expert-page-control" href="{% querystring page=page_obj.previous_page_number %}" aria-label="Previous page">← <span>Previous</span></a>
+                        {% else %}
+                            <span class="expert-page-control is-disabled" aria-disabled="true">← <span>Previous</span></span>
+                        {% endif %}
+                        <div class="expert-page-numbers">
+                            {% for page_number in page_obj.paginator.page_range %}
+                                {% if page_number == page_obj.number %}
+                                    <span class="expert-page-number is-current" aria-current="page">{{ page_number }}</span>
+                                {% else %}
+                                    <a class="expert-page-number" href="{% querystring page=page_number %}" aria-label="Page {{ page_number }}">{{ page_number }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if page_obj.has_next %}
+                            <a class="expert-page-control" href="{% querystring page=page_obj.next_page_number %}" aria-label="Next page"><span>Next</span> →</a>
+                        {% else %}
+                            <span class="expert-page-control is-disabled" aria-disabled="true"><span>Next</span> →</span>
+                        {% endif %}
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

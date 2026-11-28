@@ -1,6 +1,4 @@
-import markdown
 from django import template
-from django.utils.safestring import mark_safe
 
 from accounts.models import Profile
 
@@ -12,7 +10,7 @@ def form_user_name(value: Profile)->str:
 
 
 @register.filter
-def check_if_profile_is_completed(value:Profile)-> bool:
+def check_if_profile_is_completed(value)-> bool:
     required_fields_for_completion = [value.phone_number,value.bio,value.city,value.profile_picture]
     for i in required_fields_for_completion:
         if i is None or i =='':

@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0B1424">
+    <title>404 — Page Not Found | HyperVerdict</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="system-error-body">
+    <main class="system-error-page error-404" aria-labelledby="error-title">
+        <a class="brand system-error-brand" href="{% url 'home' %}" aria-label="HyperVerdict homepage"><span class="brand-mark">H</span><span>Hyper<span class="brand-accent">Verdict</span></span></a>
+        <section class="system-error-layout">
+            <div class="system-error-copy">
+                <p class="eyebrow"><span class="eyebrow-line"></span> PAGE NOT FOUND</p>
+                <h1 id="error-title">404 <span>— Page Not Found</span></h1>
+                <p class="system-error-description">The page you're looking for doesn't exist, may have been moved, or is temporarily unavailable.</p>
+                <div class="system-error-actions">
+                    <a class="button system-error-primary" href="{% url 'home' %}">Return to Homepage <span aria-hidden="true">&rarr;</span></a>
+                    <button class="button button-outline system-error-secondary" type="button" onclick="if (history.length > 1) { history.back(); } else { window.location.href = this.dataset.home; }" data-home="{% url 'home' %}">Go Back</button>
+                </div>
+                <p class="system-error-footnote">You can also <a href="{% url 'home' %}">explore HyperVerdict</a> and find the right professional for your needs.</p>
+            </div>
+            <div class="system-error-art error-art-404" aria-hidden="true">
+                <div class="error-art-glow"></div>
+                <div class="error-art-orbit error-art-orbit-one"></div>
+                <div class="error-art-orbit error-art-orbit-two"></div>
+                <div class="error-property-card">
+                    <div class="property-card-top"><span class="property-card-mark">H</span><span>HYPERVERDICT <i></i></span></div>
+                    <svg class="property-illustration" viewBox="0 0 220 170" fill="none">
+                        <path d="M24 145h172M44 145V83l66-48 66 48v62" stroke="currentColor" stroke-width="2"/>
+                        <path d="m34 86 76-55 76 55M88 145v-39h44v39M62 91h20v22H62zM138 91h20v22h-20z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M110 31V17m-7 0h14M28 145h164" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="110" cy="68" r="4" fill="currentColor"/>
+                    </svg>
+                    <div class="property-card-rule"></div>
+                    <p>A clearer path<br><strong>starts here.</strong></p>
+                    <span class="property-card-index">01 / 04</span>
+                </div>
+                <span class="error-art-note error-art-note-top">TRUSTED GUIDANCE <b>·</b></span>
+                <span class="error-art-note error-art-note-bottom"><i></i> YOUR NEXT STEP, MADE CLEAR</span>
+            </div>
+        </section>
+        <div class="system-error-bottom"><span>HYPERVERDICT</span><span>Built on trust. Designed for clarity.</span></div>
+    </main>
+</body>
+</html>

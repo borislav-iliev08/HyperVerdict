@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0B1424">
+    <title>500 — Internal Server Error | HyperVerdict</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="system-error-body">
+    <main class="system-error-page error-500" aria-labelledby="error-title">
+        <a class="brand system-error-brand" href="{% url 'home' %}" aria-label="HyperVerdict homepage"><span class="brand-mark">H</span><span>Hyper<span class="brand-accent">Verdict</span></span></a>
+        <section class="system-error-layout">
+            <div class="system-error-copy">
+                <p class="eyebrow"><span class="eyebrow-line"></span> TEMPORARY SERVICE ISSUE</p>
+                <h1 id="error-title">500 <span>— Internal Server Error</span></h1>
+                <p class="system-error-description">Something went wrong on our end. Our server encountered an unexpected error while processing your request.</p>
+                <p class="system-error-reassurance">Your request hasn’t been completed. Please try again in a moment.</p>
+                <div class="system-error-actions">
+                    <a class="button system-error-primary" href="{% url 'home' %}">Return to Homepage <span aria-hidden="true">&rarr;</span></a>
+                    <button class="button button-outline system-error-secondary" type="button" onclick="window.location.reload()">Try Again</button>
+                </div>
+                <p class="system-error-footnote">If the problem persists, please contact our support team for assistance.</p>
+            </div>
+            <div class="system-error-art error-art-500" aria-hidden="true">
+                <div class="error-art-glow"></div>
+                <div class="error-art-orbit error-art-orbit-one"></div>
+                <div class="error-art-orbit error-art-orbit-two"></div>
+                <div class="service-status-card">
+                    <div class="status-card-top"><span class="status-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5m0 3h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.3 3.8 2.9 16.6A2 2 0 0 0 4.6 19.5h14.8a2 2 0 0 0 1.7-2.9L13.7 3.8a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span><span>HYPERVERDICT <i></i></span></div>
+                    <div class="status-signal"><span></span><span></span><span></span><span></span><span></span></div>
+                    <p class="status-label">A MOMENTARY PAUSE</p>
+                    <h2>We’ll be<br><strong>right back.</strong></h2>
+                    <div class="status-card-bottom"><span class="status-indicator"></span> SERVICE RECOVERY IN PROGRESS</div>
+                </div>
+                <span class="error-art-note error-art-note-top">SECURE BY DESIGN <b>·</b></span>
+                <span class="error-art-note error-art-note-bottom"><i></i> THANK YOU FOR YOUR PATIENCE</span>
+            </div>
+        </section>
+        <div class="system-error-bottom"><span>HYPERVERDICT</span><span>Built on trust. Designed for clarity.</span></div>
+    </main>
+</body>
+</html>

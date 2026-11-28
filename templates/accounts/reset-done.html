@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Password Successfully Reset | HyperVerdict{% endblock %}
+{% block content %}
+<section class="auth-page password-auth-page">
+    <article class="auth-card password-auth-card password-result-card">
+        <a class="auth-brand brand" href="{% url 'home' %}" aria-label="HyperVerdict home"><span class="brand-mark">H</span><span>Hyper<span class="brand-accent">Verdict</span></span></a>
+        <div class="password-result-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5 9.2 17 19 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="eyebrow"><span class="eyebrow-line"></span> ACCOUNT RECOVERY</div>
+        <h1>Password Successfully Reset!</h1>
+        <p class="auth-subtitle">Your new password has been saved. You can now log in to your HyperVerdict account.</p>
+        <a class="button auth-submit password-result-button" href="{% url 'login' %}">Log In Now <span aria-hidden="true">&rarr;</span></a>
+    </article>
+</section>
+{% endblock %}

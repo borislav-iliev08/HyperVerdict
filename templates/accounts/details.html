@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load filters %}
+{% load tags %}
 {% block title %}Your profile | HyperVerdict{% endblock %}
 {% block content %}
 <section class="auth-page profile-page">
@@ -7,14 +9,19 @@
         <header class="profile-card-heading">
             <div class="profile-portrait">
                 {% if profile and profile.profile_picture %}
-                    <img class="profile-picture" src="{{ profile.profile_picture.url }}" alt="Profile photo of {{ user.first_name }} {{ user.last_name }}">
+                    <img class="profile-picture" src="{{ profile.profile_picture.url }}" alt="Profile photo of {{ user|form_user_name|capfirst }}">
                 {% else %}
                     <img class="profile-picture" src="{% static 'images/default-avatar.svg' %}" alt="Default profile avatar">
                 {% endif %}
             </div>
-            <h1 id="profile-title">{{ user.get_full_name|default:user.email }}</h1>
+            <h1 id="profile-title">{{ user|form_user_name}}</h1>
             <span class="profile-role">{{ user.get_role_display|default:user.role }}</span>
-            <p class="profile-member">Member since {{ profile.created_at|date:"F Y"|default:"Recently" }}</p>
+            <p class="profile-member">Member since {%  user_registered_at  profile%}</p>
+            {% if  profile|check_if_profile_is_completed  %}
+                 <p>Completed</p>
+            {% else %}
+                <p>Incompleted</p>
+            {% endif %}
         </header>
 
         <section class="profile-information" aria-labelledby="profile-information-title">
